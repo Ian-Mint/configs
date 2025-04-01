@@ -4,4 +4,4 @@
 
 vim.keymap.set("n", "<leader>r", function()
   vim.cmd("wa | execute 'new | setlocal buftype=nofile | terminal python ' . expand('%')")
-end)
+end, { desc = "🐍 run file" })
