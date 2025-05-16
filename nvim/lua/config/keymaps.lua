@@ -16,5 +16,11 @@ local pytest_runner = require("config.pytest_runner")
 vim.keymap.set("n", "<leader>rf", pytest_runner.run_pytest_on_function, {
   noremap = true, -- Non-recursive mapping
   silent = true, -- Don't echo the command
-  desc = "🐍 Run pytest on function under cursor", -- Description for which-key etc.
+  desc = "🐍 Run pytest on function under cursor",
 })
+
+-- emacs motions
+vim.keymap.set("n", "<C-a>", "^", { desc = "Go to beginning of line (Emacs Ctrl+a)" })
+vim.keymap.set("n", "<C-e>", "$", { desc = "Go to end of line (Emacs Ctrl+e)" })
+vim.keymap.set("v", "<C-a>", "^", { desc = "Go to beginning of line (Emacs Ctrl+a)" })
+vim.keymap.set("v", "<C-e>", "$", { desc = "Go to end of line (Emacs Ctrl+e)" })
