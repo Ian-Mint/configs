@@ -42,7 +42,6 @@ for _, mapping in ipairs({
   { "(", ")" },
   { "[", "]" },
   { "{", "}" },
-  { "<", ">" },
 }) do
   local open, close = mapping[1], mapping[2]
   vim.keymap.set("x", open, function()
