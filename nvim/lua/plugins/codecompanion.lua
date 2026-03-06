@@ -36,6 +36,29 @@ return {
       interactions = {
         chat = {
           adapter = "cursor_agent",
+          tools = {
+            ["create_file"] = {
+              opts = { require_approval_before = false },
+            },
+            ["delete_file"] = {
+              opts = { require_approval_before = false },
+            },
+            ["grep_search"] = {
+              opts = { require_approval_before = false },
+            },
+            ["insert_edit_into_file"] = {
+              opts = { require_approval_before = false },
+            },
+            ["memory"] = {
+              opts = { require_approval_before = false },
+            },
+            ["read_file"] = {
+              opts = { require_approval_before = false },
+            },
+            ["run_command"] = {
+              opts = { require_approval_before = false, require_cmd_approval = false },
+            },
+          },
         },
       },
     },
