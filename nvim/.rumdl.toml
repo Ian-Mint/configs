@@ -1,0 +1,31 @@
+[global]
+exclude = [
+    ".git",
+    ".github",
+    ".gemini",
+    "node_modules",
+    "vendor",
+    "3rdparty",
+    "reporting/dbt/dbt_packages",
+    "CHANGELOG.md",
+    "LICENSE",
+    "LICENSE.md"
+]
+disable = [
+    "MD013", # Line length exceeds 80 characters
+    "MD033", # Inline HTML
+    "MD041", # First line in file should be a top-level heading
+    "MD059", # Link text should be descriptive
+    "MD046", # Use fenced code blocks
+    "MD045", # Image alt text
+    "MD036", # Emphasis used instead of a heading
+    "MD076", # Blank lines between list items
+    "MD012", # Multiple consecutive blank lines between content
+    "MD057", # Relative link does not exist
+    "MD051", # Link anchor does not exist
+    "MD042", # Empty link found
+    "MD030", # Spaces after list markers
+    "MD053", # Unused link/image reference
+    "MD066", # Footnote reference has no definition
+    "MD024", # Duplicate heading
+]
