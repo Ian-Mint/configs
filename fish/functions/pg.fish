@@ -1,3 +1,3 @@
 function pg
-    ti py-gazelle $argv
+    ti py-gazelle src/python
 end
