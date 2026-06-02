@@ -11,7 +11,10 @@ set -x PATH $PATH $GOBIN /usr/local/go/bin
 set -x PATH $PATH /home/ian.pegg/.pulumi/bin
 
 # titanium
-set -x SONIC_ROOT_CACHING_DIR "$HOME/.cache/sonic"
+set -gx SONIC_ROOT_CACHING_DIR_BASE "$HOME/.cache/sonic"
+# Track the worktree branch in the cache dir (base + ".<branch>"). Updated
+# on `wt switch`; derived here too so fresh shells match the current branch.
+_sonic_set_caching_dir
 set -x SONIC_ENABLE_RAW_LOGGING 1
 set -x TARGET_BRANCH env-nonprod-ian
 set -x TI_ENV ian.brainos.dev

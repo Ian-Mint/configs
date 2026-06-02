@@ -24,9 +24,9 @@ function wt
         break
     end
 
-    set -l before_paths
+    set -l before
     if test "$subcmd" = remove
-        set before_paths (_bazel_wt_list_worktree_paths)
+        set before (_bazel_wt_list_worktrees)
     end
 
     set -l directive_file (mktemp)
@@ -38,11 +38,21 @@ function wt
     end
     rm -f $directive_file
 
+    # Any command that moved us (switch/new/...) lands in a worktree; point
+    # the Sonic cache at the branch we ended up on.
+    if test $exit_code -eq 0
+        _sonic_set_caching_dir
+    end
+
     if test "$subcmd" = remove -a $exit_code -eq 0
         set -l after_paths (_bazel_wt_list_worktree_paths)
-        for path in $before_paths
+        for entry in $before
+            set -l parts (string split \t $entry)
+            set -l path $parts[1]
+            set -l branch $parts[2]
             if not contains -- $path $after_paths
                 _bazel_wt_cleanup_output_base $path
+                _sonic_cleanup_caching_dir $branch
             end
         end
     end
