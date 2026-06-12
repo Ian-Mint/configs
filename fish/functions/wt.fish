@@ -29,6 +29,21 @@ function wt
         set before (_bazel_wt_list_worktrees)
     end
 
+    # Detect `wt switch --create` so we can seed a venv afterwards. Stop at the
+    # `--` separator so flags destined for an --execute command don't count.
+    set -l is_create 0
+    if test "$subcmd" = switch
+        for arg in $argv
+            switch $arg
+                case --
+                    break
+                case --create -c
+                    set is_create 1
+                    break
+            end
+        end
+    end
+
     set -l directive_file (mktemp)
     WORKTRUNK_DIRECTIVE_FILE=$directive_file command wt $argv
     set -l exit_code $status
@@ -42,6 +57,12 @@ function wt
     # the Sonic cache at the branch we ended up on.
     if test $exit_code -eq 0
         _sonic_set_caching_dir
+    end
+
+    # After a successful `wt switch --create`, we're sitting in the freshly
+    # created worktree; seed its virtualenv from the lock files.
+    if test "$is_create" = 1 -a $exit_code -eq 0
+        ti create-venv
     end
 
     if test "$subcmd" = remove -a $exit_code -eq 0
