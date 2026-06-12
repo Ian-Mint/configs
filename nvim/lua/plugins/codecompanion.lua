@@ -13,29 +13,29 @@ return {
     opts = {
       adapters = {
         acp = {
-          cursor_agent = function()
-            return require("codecompanion.adapters").extend("gemini_cli", {
-              name = "cursor_agent",
-              formatted_name = "Cursor Agent",
+          claude_code = function()
+            -- Auth is inherited from the local `claude` subscription login
+            -- (~/.claude/.credentials.json), so no token/key is set here.
+            -- The wrapper sanitizes settings (e.g. permissions.defaultMode =
+            -- "auto", which the bundled Agent SDK rejects) without touching the
+            -- real ~/.claude used by the `claude` CLI. See bin/claude-acp.sh.
+            local wrapper = vim.fn.stdpath("config") .. "/bin/claude-acp.sh"
+            return require("codecompanion.adapters").extend("claude_code", {
               commands = {
-                default = {
-                  os.getenv("HOME") .. "/.local/bin/agent",
-                  "acp",
-                },
+                default = { wrapper },
+                yolo = { wrapper, "--yolo" },
               },
               defaults = {
-                auth_method = "cursor_login",
                 mcpServers = {},
                 timeout = 30000,
               },
-              env = {},
             })
           end,
         },
       },
       interactions = {
         chat = {
-          adapter = "cursor_agent",
+          adapter = "claude_code",
           tools = {
             ["create_file"] = {
               opts = { require_approval_before = false },
