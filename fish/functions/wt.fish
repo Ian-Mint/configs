@@ -63,6 +63,7 @@ function wt
     # created worktree; seed its virtualenv from the lock files.
     if test "$is_create" = 1 -a $exit_code -eq 0
         ti create-venv
+        vs
     end
 
     if test "$subcmd" = remove -a $exit_code -eq 0

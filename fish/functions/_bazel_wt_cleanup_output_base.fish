@@ -28,5 +28,8 @@ function _bazel_wt_cleanup_output_base --argument-names workspace_path
 
     set -l size (du -sh $base 2>/dev/null | string split -f1 \t)
     printf '[bazel-wt-gc] removing %s (%s) for %s\n' $base $size $workspace_path
+    # External toolchain dirs (e.g. rules_python) are extracted read-only;
+    # rm -rf fails on them without u+w.
+    chmod -R u+w -- $base 2>/dev/null
     rm -rf -- $base
 end
